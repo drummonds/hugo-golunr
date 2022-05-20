@@ -6,6 +6,7 @@ search index from the current working directory.
 
 ## Installing
 
+The original is here:
 `go get github.com/arial7/hugo-golunr`
 
 ## Usage 
@@ -18,4 +19,6 @@ hugo-golunr
 Pretty easy, huh? After running `hugo-golunr`, you'll see a `search_index.json` file in your
 `./static` directory. Just load that in your theme.
 
+## Tidying
+I have moved the code to a standard format for a command line format and added a mod.ls
 
