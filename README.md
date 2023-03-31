@@ -22,3 +22,8 @@ Pretty easy, huh? After running `hugo-golunr`, you'll see a `search_index.json` 
 ## Tidying
 I have moved the code to a standard format for a command line format and added a mod.ls
 
+## Change History
+
+### V1.0.0 2023-03-31  
+
+- Breaking change change location to be relative so can reuse json with local build as well as remote.

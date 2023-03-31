@@ -8,8 +8,6 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
-
-	"github.com/spf13/viper"
 )
 
 var mtx sync.Mutex
@@ -18,7 +16,8 @@ var posts []Post
 
 // baseURL should be parsed from the config.toml file in the hugo repo
 func main() {
-	initConfig()
+
+	fmt.Println("Vesion 1.0.0 2023-03-31")
 
 	filepath.Walk("./content", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -46,16 +45,4 @@ func main() {
 		return
 	}
 	fmt.Println("Done!")
-}
-
-func initConfig() {
-	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
-	viper.AutomaticEnv()
-	viper.SetDefault("baseurl", "")
-	err := viper.ReadInConfig()
-	if err != nil {
-		fmt.Println("Could not read site config:", err)
-		return
-	}
 }

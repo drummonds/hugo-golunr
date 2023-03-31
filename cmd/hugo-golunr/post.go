@@ -7,7 +7,6 @@ import (
 
 	"github.com/gernest/front"
 	strip "github.com/grokify/html-strip-tags-go"
-	"github.com/spf13/viper"
 	stripmd "github.com/writeas/go-strip-markdown"
 )
 
@@ -42,8 +41,8 @@ func ParsePost(path string) {
 	post.URI = strings.Replace(uri, " ", "-", -1)
 
 	fmt.Printf("Parsed %s\n", post.URI)
-	// Add the baseurl in front of the post location
-	post.URI = viper.GetString("baseurl") + post.URI
+	// The template needs to use the baseURL to form a compete URL.  This allows the same
+	// json file to be used on different sites eg development and productio.
 	mtx.Lock()
 	posts = append(posts, post)
 	mtx.Unlock()
