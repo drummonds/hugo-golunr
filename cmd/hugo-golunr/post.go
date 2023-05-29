@@ -17,18 +17,18 @@ type Post struct {
 	Tags    []string `json:"tags"`
 }
 
-func ParsePost(path string) {
+func PathToPost(path string) (post Post, err error) {
 	buf, err := ioutil.ReadFile(path)
 	if err != nil {
 		fmt.Println("Error while reading file: ", path, err)
-		return
+		return post, err
 	}
 
 	m := front.NewMatter()
 	m.Handle("---", front.YAMLHandler)
 	f, body, err := m.Parse(strings.NewReader(string(buf)))
 
-	post := Post{}
+	// post := Post{}
 	if title, ok := f["title"]; ok {
 		post.Title = stripmd.Strip(title.(string))
 	}
@@ -36,9 +36,19 @@ func ParsePost(path string) {
 	text = strip.StripTags(text)
 
 	post.Content = text
-	uri := strings.Replace(strings.TrimSuffix(strings.TrimPrefix(path, "content"), ".md"), "index", "", -1)
-	uri = strings.ToLower(uri)
+	uri := strings.ToLower(strings.TrimPrefix(path, "content"))
+	uri = strings.TrimSuffix(uri, ".md")
+	uri = strings.Replace(uri, "_index", "", 1)
+	uri = strings.Replace(uri, "index", "", 1)
 	post.URI = strings.Replace(uri, " ", "-", -1)
+
+	return post, nil
+}
+func ParsePost(path string) {
+	post, err := PathToPost(path)
+	if err != nil {
+		panic(fmt.Sprintf("error parsing path %s", path))
+	}
 
 	fmt.Printf("Parsed %s\n", post.URI)
 	// The template needs to use the baseURL to form a compete URL.  This allows the same

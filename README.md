@@ -24,6 +24,9 @@ I have moved the code to a standard format for a command line format and added a
 
 ## Change History
 
+### V1.1.0 2023-05-29
+- Fixing _index.md being resolved as ../_ instead of ../  
+
 ### V1.0.0 2023-03-31  
 
 - Breaking change change location to be relative so can reuse json with local build as well as remote.
