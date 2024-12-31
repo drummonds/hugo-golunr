@@ -1,0 +1,11 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  build:
+    dir: cmd/hugo-golunr
+    cmds:
+      - go build .
+      - mv hugo-golunr ~/.local/bin
+

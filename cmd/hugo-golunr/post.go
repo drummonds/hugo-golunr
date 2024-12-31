@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/gernest/front"
@@ -18,7 +18,7 @@ type Post struct {
 }
 
 func PathToPost(path string) (post Post, err error) {
-	buf, err := ioutil.ReadFile(path)
+	buf, err := os.ReadFile(path)
 	if err != nil {
 		fmt.Println("Error while reading file: ", path, err)
 		return post, err
@@ -27,6 +27,10 @@ func PathToPost(path string) (post Post, err error) {
 	m := front.NewMatter()
 	m.Handle("---", front.YAMLHandler)
 	f, body, err := m.Parse(strings.NewReader(string(buf)))
+	if err != nil {
+		fmt.Println("Error while parsing file: ", path, err)
+		return post, err
+	}
 
 	// post := Post{}
 	if title, ok := f["title"]; ok {
@@ -52,7 +56,7 @@ func ParsePost(path string) {
 
 	fmt.Printf("Parsed %s\n", post.URI)
 	// The template needs to use the baseURL to form a compete URL.  This allows the same
-	// json file to be used on different sites eg development and productio.
+	// json file to be used on different sites eg development and production.
 	mtx.Lock()
 	posts = append(posts, post)
 	mtx.Unlock()

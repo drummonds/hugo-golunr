@@ -19,5 +19,10 @@
         "titleBar.inactiveForeground": "#15202b99",
         "commandCenter.border": "#15202b99"
     },
-    "peacock.remoteColor": "#61dafb"
+    "peacock.remoteColor": "#61dafb",
+    "cSpell.words": [
+        "gernest",
+        "stripmd",
+        "writeas"
+    ]
 }

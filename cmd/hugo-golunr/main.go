@@ -17,7 +17,7 @@ var posts []Post
 // baseURL should be parsed from the config.toml file in the hugo repo
 func main() {
 
-	fmt.Println("Vesion 1.1.0 2023-05-29")
+	fmt.Println("Version 1.1.1 2024-08-16")
 
 	filepath.Walk("./content", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
