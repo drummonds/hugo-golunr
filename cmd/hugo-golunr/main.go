@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,7 +16,10 @@ var posts []Post
 // baseURL should be parsed from the config.toml file in the hugo repo
 func main() {
 
-	fmt.Println("Version 1.1.1 2024-08-16")
+	fmt.Println("Version 1.2.0 2024-12-31")
+
+	// Initialize posts with a reasonable capacity to reduce reallocations
+	posts = make([]Post, 0, 100) // adjust capacity based on expected number of posts
 
 	filepath.Walk("./content", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -39,7 +41,7 @@ func main() {
 		fmt.Println("Could not marshal posts to JSON: ", err)
 		return
 	}
-	err = ioutil.WriteFile("static/search_index.json", output, 0644)
+	err = os.WriteFile("static/search_index.json", output, 0644)
 	if err != nil {
 		fmt.Println("Could not write file: ", err)
 		return
