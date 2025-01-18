@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/gernest/front"
 	strip "github.com/grokify/html-strip-tags-go"
+	"github.com/spf13/afero"
 	stripmd "github.com/writeas/go-strip-markdown"
 )
 
@@ -17,8 +17,8 @@ type Post struct {
 	Tags    []string `json:"tags"`
 }
 
-func PathToPost(path string) (post Post, err error) {
-	buf, err := os.ReadFile(path)
+func PathToPost(fs afero.Fs, path string) (post Post, err error) {
+	buf, err := afero.ReadFile(fs, path)
 	if err != nil {
 		fmt.Println("Error while reading file: ", path, err)
 		return post, err
@@ -48,10 +48,11 @@ func PathToPost(path string) (post Post, err error) {
 
 	return post, nil
 }
-func ParsePost(path string) {
-	post, err := PathToPost(path)
+func ParsePost(fs afero.Fs, path string) {
+	post, err := PathToPost(fs, path)
 	if err != nil {
-		panic(fmt.Sprintf("error parsing path %s", path))
+		fmt.Printf("error parsing path %s", path)
+		return
 	}
 
 	fmt.Printf("Parsed %s\n", post.URI)
