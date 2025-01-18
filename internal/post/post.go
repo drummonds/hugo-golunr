@@ -1,4 +1,4 @@
-package main
+package post
 
 import (
 	"fmt"
@@ -49,6 +49,7 @@ func PathToPost(fs afero.Fs, path string) (post Post, err error) {
 	return post, nil
 }
 func ParsePost(fs afero.Fs, path string) {
+	defer wg.Done()
 	post, err := PathToPost(fs, path)
 	if err != nil {
 		fmt.Printf("error parsing path %s", path)
@@ -58,10 +59,6 @@ func ParsePost(fs afero.Fs, path string) {
 	fmt.Printf("Parsed %s\n", post.URI)
 	// The template needs to use the baseURL to form a compete URL.  This allows the same
 	// json file to be used on different sites eg development and production.
-	mtx.Lock()
-	posts = append(posts, post)
-	mtx.Unlock()
-
-	wg.Done()
+	AddPost(post)
 
 }

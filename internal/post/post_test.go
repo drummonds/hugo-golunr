@@ -1,8 +1,10 @@
-package main
+package post
 
 import (
+	"encoding/json"
 	"fmt"
 	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/spf13/afero"
@@ -91,12 +93,44 @@ func TestEmptyRealFile(t *testing.T) {
 	abstractTestContents(t, contents, "/test/", false)
 }
 
-func TestRealFile(t *testing.T) {
-	contents := `---
+var haggisTest = `---
 title: Test
 date: 2025-01-01
 ---
 This is a haggis test.
 `
-	abstractTestContents(t, contents, "/test/", false)
+
+func TestRealFile(t *testing.T) {
+	abstractTestContents(t, haggisTest, "/test/", false)
+}
+
+func abstractTestJson(t *testing.T, filePath string) {
+	AppFs := afero.NewMemMapFs()
+
+	// Set up test files in virtual filesystem
+	err := afero.WriteFile(AppFs, filePath, []byte(haggisTest), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create test file: %+v", err)
+	}
+
+	post, err := PathToPost(AppFs, filePath)
+	if err != nil {
+		t.Fatalf("Failed to parse post: %v", err)
+	}
+
+	output, err := json.Marshal(post)
+	if err != nil {
+		t.Fatalf("Failed to parse post: %v", err)
+	}
+	if !strings.Contains(string(output), "haggis") {
+		t.Fatalf("output does not include words haggis for file %s", filePath)
+	}
+}
+
+func TestJson(t *testing.T) {
+	abstractTestJson(t, "/index.md")
+}
+
+func TestJsonSubDir(t *testing.T) {
+	abstractTestJson(t, "/Donkey/_index.md")
 }

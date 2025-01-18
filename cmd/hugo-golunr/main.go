@@ -6,24 +6,19 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 
+	"github.com/riesinger/hugo-golunr/internal/post"
 	"github.com/spf13/afero"
 )
-
-var mtx sync.Mutex
-var wg sync.WaitGroup
-var posts []Post
 
 var _fs = afero.NewOsFs()
 
 // baseURL should be parsed from the config.toml file in the hugo repo
 func main() {
+	fmt.Println("Version 1.3.0 2025-01-18")
 
-	fmt.Println("Version 1.2.0 2024-12-31")
-
-	// Initialize posts with a reasonable capacity to reduce reallocations
-	posts = make([]Post, 0, 100) // adjust capacity based on expected number of posts
+	// Initialize the post store
+	post.InitStore(100) // adjust capacity based on expected number of posts
 
 	filepath.Walk("./content", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -34,13 +29,13 @@ func main() {
 			return nil
 		}
 		if strings.HasSuffix(info.Name(), ".md") {
-			wg.Add(1)
-			go ParsePost(_fs, path)
+			post.AddToParseQueue(_fs, path)
 		}
 		return nil
 	})
-	wg.Wait()
-	output, err := json.Marshal(posts)
+	post.WaitForParsing()
+
+	output, err := json.Marshal(post.GetAllPosts())
 	if err != nil {
 		fmt.Println("Could not marshal posts to JSON: ", err)
 		return
