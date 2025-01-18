@@ -1,4 +1,4 @@
-module github.com/drummonds/hugo-golunr
+module github.com/riesinger/hugo-golunr
 
 go 1.23
 

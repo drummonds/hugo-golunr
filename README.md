@@ -6,8 +6,7 @@ search index from the current working directory.
 
 ## Installing
 
-The original is here:
-`go get github.com/arial7/hugo-golunr`
+`go install github.com/riesinger/hugo-golunr@latest`
 
 ## Usage 
 
