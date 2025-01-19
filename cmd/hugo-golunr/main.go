@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -15,7 +16,13 @@ var _fs = afero.NewOsFs()
 
 // baseURL should be parsed from the config.toml file in the hugo repo
 func main() {
-	fmt.Println("Version 1.3.0 2025-01-18")
+	flag.BoolVar(&post.Verbose, "v", false, "enable verbose output")
+	flag.BoolVar(&post.Verbose, "verbose", false, "enable verbose output")
+	flag.BoolVar(&post.WordSet, "w", false, "Convert content to set of words so only appear once")
+	flag.BoolVar(&post.WordSet, "wordset", false, "Convert content to set of words so only appear once")
+	flag.Parse()
+
+	fmt.Println("Version 1.6.0 2025-01-19")
 
 	// Initialize the post store
 	post.InitStore(100) // adjust capacity based on expected number of posts

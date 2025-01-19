@@ -83,3 +83,6 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/linux,windows,osx,vim
 
 search_index.json
+
+# Go code artifacts
+__debug_*

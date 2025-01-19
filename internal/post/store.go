@@ -1,6 +1,7 @@
 package post
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/spf13/afero"
@@ -30,6 +31,7 @@ func WaitForParsing() {
 
 // GetAllPosts returns all parsed posts
 func GetAllPosts() []Post {
+	fmt.Printf("\nNumber of posts: %d\n", len(posts))
 	return posts
 }
 
