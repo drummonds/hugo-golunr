@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/gernest/front"
+	"github.com/adrg/frontmatter"
 	strip "github.com/grokify/html-strip-tags-go"
 	"github.com/spf13/afero"
 	stripmd "github.com/writeas/go-strip-markdown"
@@ -24,31 +24,22 @@ func PathToPost(fs afero.Fs, path string) (post Post, err error) {
 		return post, err
 	}
 
-	m := front.NewMatter()
-	m.Handle("---", front.YAMLHandler)
-	f, body, err := m.Parse(strings.NewReader(string(buf)))
+	var matter struct {
+		Title string   `yaml:"title"`
+		Tags  []string `yaml:"tags"`
+	}
+
+	rest, err := frontmatter.Parse(strings.NewReader(string(buf)), &matter)
 	if err != nil {
-		fmt.Println("Error while parsing file: ", path, err)
+		fmt.Println("Error while reading frontmatter from file: ", path, err)
 		return post, err
+		// Treat error.
 	}
 
-	// post := Post{}
-	if title, ok := f["title"]; ok {
-		post.Title = stripmd.Strip(title.(string))
-	}
+	post.Title = stripmd.Strip(matter.Title)
+	post.Tags = matter.Tags
 
-	if tags, ok := f["tags"]; ok {
-		if tagSlice, ok := tags.([]interface{}); ok {
-			post.Tags = make([]string, len(tagSlice))
-			for i, tag := range tagSlice {
-				if str, ok := tag.(string); ok {
-					post.Tags[i] = str
-				}
-			}
-		}
-	}
-
-	text := stripmd.Strip(body)
+	text := stripmd.Strip(string(rest))
 	text = strip.StripTags(text)
 	if WordSet {
 		// Convert text to unique words
