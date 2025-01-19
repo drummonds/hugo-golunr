@@ -1,6 +1,7 @@
 package post
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 
@@ -26,7 +27,7 @@ tags: ["test", "large"]
 	// Add a large body of content
 	for i := 0; i < 1000; i++ {
 		contentBuilder.WriteString(`## Section `)
-		contentBuilder.WriteString(string(rune('A' + (i % 26))))
+		contentBuilder.WriteString(string(rune('A'+(i%26))) + fmt.Sprintf("-%d", (i/26)))
 		contentBuilder.WriteString("\n\n")
 		contentBuilder.WriteString("Lorem ipsum dolor sit amet, consectetur adipiscing elit. ")
 		contentBuilder.WriteString("Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ")

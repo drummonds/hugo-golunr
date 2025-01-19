@@ -14,7 +14,7 @@ import (
 func absNormalTestPathToPost(t *testing.T, fs afero.Fs, path string, want string) {
 	post, err := PathToPost(fs, path)
 	if post.URI != want || err != nil {
-		t.Fatalf(`PathToPost(fs,"%s") = "%s", %v, wanted "%s", <nil>`, path, post.URI, err, want)
+		t.Fatalf(`PathToPost(fs,"%s") = "%s", %v, wanted "%s"`, path, post.URI, err, want)
 	}
 }
 
@@ -82,8 +82,9 @@ func TestEmptyFile(t *testing.T) {
 	abstractTestContents(t, "", "/test/", false)
 }
 
+// With new frontmatter parser, this should not fail
 func TestRubbishFile(t *testing.T) {
-	abstractTestContents(t, "rubbish", "front: unknown delim", true)
+	abstractTestContents(t, "rubbish", "/test/", false)
 }
 
 func TestEmptyRealFile(t *testing.T) {
