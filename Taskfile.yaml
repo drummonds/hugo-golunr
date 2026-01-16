@@ -9,3 +9,20 @@ tasks:
       - go build .
       - mv hugo-golunr ~/.local/bin
 
+  install:
+    desc: Install hugo-golunr to $GOPATH/bin
+    dir: cmd/hugo-golunr
+    cmds:
+      - go install .
+
+  release:
+    desc: Build release binaries for multiple platforms
+    dir: cmd/hugo-golunr
+    cmds:
+      - mkdir -p ../../dist
+      - GOOS=linux GOARCH=amd64 go build -o ../../dist/hugo-golunr-linux-amd64 .
+      - GOOS=linux GOARCH=arm64 go build -o ../../dist/hugo-golunr-linux-arm64 .
+      - GOOS=darwin GOARCH=amd64 go build -o ../../dist/hugo-golunr-darwin-amd64 .
+      - GOOS=darwin GOARCH=arm64 go build -o ../../dist/hugo-golunr-darwin-arm64 .
+      - GOOS=windows GOARCH=amd64 go build -o ../../dist/hugo-golunr-windows-amd64.exe .
+

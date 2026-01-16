@@ -22,7 +22,7 @@ func main() {
 	flag.BoolVar(&post.WordSet, "wordset", false, "Convert content to set of words so only appear once")
 	flag.Parse()
 
-	fmt.Println("Version 1.6.0 2025-01-19")
+	fmt.Println("Version 1.7.0 2026-01-16")
 
 	// Initialize the post store
 	post.InitStore(100) // adjust capacity based on expected number of posts
