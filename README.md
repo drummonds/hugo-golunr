@@ -29,3 +29,12 @@ I have moved the code to a standard format for a command line format and added a
 ### V1.0.0 2023-03-31  
 
 - Breaking change change location to be relative so can reuse json with local build as well as remote.
+
+## Links
+
+| | |
+|---|---|
+| Documentation | https://h3-hugo-golunr.statichost.page/ |
+| Source (Codeberg) | https://codeberg.org/hum3/hugo-golunr |
+| Mirror (GitHub) | https://github.com/drummonds/hugo-golunr |
+| Docs repo | https://codeberg.org/hum3/hugo-golunr-docs |
