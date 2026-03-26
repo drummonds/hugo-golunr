@@ -6,7 +6,7 @@ search index from the current working directory.
 
 ## Installing
 
-`go install github.com/riesinger/hugo-golunr@latest`
+`go install codeberg.org/hum3/hugo-golunr@latest`
 
 ## Usage 
 
@@ -37,4 +37,3 @@ I have moved the code to a standard format for a command line format and added a
 | Documentation | https://h3-hugo-golunr.statichost.page/ |
 | Source (Codeberg) | https://codeberg.org/hum3/hugo-golunr |
 | Mirror (GitHub) | https://github.com/drummonds/hugo-golunr |
-| Docs repo | https://codeberg.org/hum3/hugo-golunr-docs |

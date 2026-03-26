@@ -1,4 +1,4 @@
-module github.com/riesinger/hugo-golunr
+module codeberg.org/hum3/hugo-golunr
 
 go 1.24.0
 
@@ -17,4 +17,4 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-replace github.com/riesinger/hugo-golunr/internal/post => ./internal/post
+replace codeberg.org/hum3/hugo-golunr/internal/post => ./internal/post

@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/riesinger/hugo-golunr/internal/post"
+	"codeberg.org/hum3/hugo-golunr/internal/post"
 	"github.com/spf13/afero"
 )
 
