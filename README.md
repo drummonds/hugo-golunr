@@ -34,5 +34,5 @@ I have moved the code to a standard format for a command line format and added a
 
 | | |
 |---|---|
-| Source (Codeberg) | https://codeberg.org/hum3/hugo-golunr |
+| Source | https://git.bytestone.uk/hum3/hugo-golunr |
 | Mirror (GitHub) | https://github.com/drummonds/hugo-golunr |
